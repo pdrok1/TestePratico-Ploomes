@@ -1,0 +1,9 @@
+C:\Users\Pedro\Desktop\TestePratico\Libraries\MongoDBClient\bin\Debug\netcoreapp3.1\MongoDBClient.deps.json
+C:\Users\Pedro\Desktop\TestePratico\Libraries\MongoDBClient\bin\Debug\netcoreapp3.1\MongoDBClient.dll
+C:\Users\Pedro\Desktop\TestePratico\Libraries\MongoDBClient\bin\Debug\netcoreapp3.1\MongoDBClient.pdb
+C:\Users\Pedro\Desktop\TestePratico\Libraries\MongoDBClient\obj\Debug\netcoreapp3.1\MongoDBClient.csprojAssemblyReference.cache
+C:\Users\Pedro\Desktop\TestePratico\Libraries\MongoDBClient\obj\Debug\netcoreapp3.1\MongoDBClient.AssemblyInfoInputs.cache
+C:\Users\Pedro\Desktop\TestePratico\Libraries\MongoDBClient\obj\Debug\netcoreapp3.1\MongoDBClient.AssemblyInfo.cs
+C:\Users\Pedro\Desktop\TestePratico\Libraries\MongoDBClient\obj\Debug\netcoreapp3.1\MongoDBClient.csproj.CoreCompileInputs.cache
+C:\Users\Pedro\Desktop\TestePratico\Libraries\MongoDBClient\obj\Debug\netcoreapp3.1\MongoDBClient.dll
+C:\Users\Pedro\Desktop\TestePratico\Libraries\MongoDBClient\obj\Debug\netcoreapp3.1\MongoDBClient.pdb
