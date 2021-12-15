@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Abstract;
 using Infrastructure.Attributes;
+using Infrastructure.Repositories;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -9,26 +10,15 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Abstract
 {
-    public abstract class GenericMongoDBRepository<TEntity, TDocument> : IRepository<TEntity>
+    public abstract class GenericMongoDBRepository<TEntity, TDocument> : GenericMongoDBClient<TDocument>, IRepository<TEntity>
         where TEntity : class, IEntity
         where TDocument : class, IMongoDBDocument
     {
+        private readonly CounterRepository _counterRepository;
 
-        private readonly Assembly thisAssembly = Assembly.Load(AssemblyName.GetAssemblyName(AppDomain.CurrentDomain.BaseDirectory + "Infrastructure.dll"));
-
-        protected readonly IMongoCollection<TDocument> _collection;
-
-        public GenericMongoDBRepository(IOptions<MongoDBSettings> settings)
+        public GenericMongoDBRepository(IOptions<MongoDBSettings> settings, CounterRepository counterRepository) : base(settings)
         {
-            var collectionName = typeof(TDocument).GetCustomAttribute<CollectionNameAttribute>()?.Value;
-
-            if (collectionName is null)
-                throw new NotSupportedException($"{typeof(TDocument).FullName} doesn't support a MongoCollection (doesn't have the CollectionName attribute)");
-
-            _collection =
-                new MongoClient(Environment.GetEnvironmentVariable("CONNECTION_STRING"))
-                .GetDatabase(Environment.GetEnvironmentVariable("DATABASE_NAME"))
-                .GetCollection<TDocument>(collectionName);
+            _counterRepository = counterRepository;
         }
 
         protected TDocument ToDto(TEntity entity)
@@ -51,6 +41,7 @@ namespace Infrastructure.Abstract
 
         public virtual async Task<TEntity> Insert(TEntity newEntity)
         {
+            newEntity.Id = await _counterRepository.GetNextId();
             await _collection.InsertOneAsync(ToDto(newEntity));
             return newEntity;
         }

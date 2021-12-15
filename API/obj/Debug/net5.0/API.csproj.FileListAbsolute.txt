@@ -17,7 +17,6 @@ C:\Users\Pedro\Desktop\TestePratico\API\obj\Debug\net5.0\staticwebassets\API.Sta
 C:\Users\Pedro\Desktop\TestePratico\API\obj\Debug\net5.0\scopedcss\bundle\API.styles.css
 C:\Users\Pedro\Desktop\TestePratico\API\obj\Debug\net5.0\API.RazorTargetAssemblyInfo.cache
 C:\Users\Pedro\Desktop\TestePratico\API\bin\Debug\net5.0\MediatR.dll
-C:\Users\Pedro\Desktop\TestePratico\API\bin\Debug\net5.0\appsettings.json
 C:\Users\Pedro\Desktop\TestePratico\API\bin\Debug\net5.0\API.exe
 C:\Users\Pedro\Desktop\TestePratico\API\bin\Debug\net5.0\API.deps.json
 C:\Users\Pedro\Desktop\TestePratico\API\bin\Debug\net5.0\API.runtimeconfig.json

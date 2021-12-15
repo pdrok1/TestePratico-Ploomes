@@ -1,0 +1,8 @@
+API/bin/
+API/obj/
+
+Infrastructure/bin/
+Infrastructure/obj/
+
+BusinessLogic/bin/
+BusinessLogic/obj/

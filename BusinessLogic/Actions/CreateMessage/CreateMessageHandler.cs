@@ -31,6 +31,7 @@ namespace BusinessLogic.Actions.CreateMessage
             var newMessage = new Message()
             {
                 ReceiverId = request.ReceiverId,
+                Title = request.Title,
                 Type = request.Type,
                 Content = request.Content
             };

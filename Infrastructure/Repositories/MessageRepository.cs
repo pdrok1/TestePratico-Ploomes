@@ -14,7 +14,7 @@ namespace Infrastructure.Repositories
 {
     public class MessageRepository : GenericMongoDBRepository<Message, MessageDto>, IMessageRepository
     {
-        public MessageRepository(IOptions<MongoDBSettings> settings) : base(settings) 
+        public MessageRepository(IOptions<MongoDBSettings> settings, CounterRepository counterRepository) : base(settings, counterRepository) 
         { }
 
         public async Task<IQueryable<Message>> GetAllMessagesBy(int clientId)

@@ -32,6 +32,7 @@ namespace BusinessLogic.Actions.UpsertClient
                 return await _clientRepository.Insert(newClientData) as UpsertClientResponse;
             }
 
+            newClientData.Enabled = currentClient.Enabled;
             return await _clientRepository.Update(request.Id, newClientData) as UpsertClientResponse;
         }
     }

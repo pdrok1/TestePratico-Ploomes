@@ -39,11 +39,11 @@ namespace API
             var assembly = InjectionHelpers.GetApplicationAssembly();
 
             services.AddMediatR(assembly);
-            services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDBSettings"));
-            //services.AddScoped<UpsertClientHandler>();
-            //services.AddScoped<CreateMessageHandler>();
+            //services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDBSettings"));
+
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<CounterRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

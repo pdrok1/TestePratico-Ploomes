@@ -12,7 +12,7 @@ namespace Infrastructure.Repositories
 {
     public class ClientRepository : GenericMongoDBRepository<Client, ClientDto>, IClientRepository
     {
-        public ClientRepository(IOptions<MongoDBSettings> settings) : base(settings)
+        public ClientRepository(IOptions<MongoDBSettings> settings, CounterRepository counterRepository) : base(settings, counterRepository)
         { 
         }
 

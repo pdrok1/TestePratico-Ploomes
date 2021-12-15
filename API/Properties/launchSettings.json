@@ -31,6 +31,10 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "CONNECTION_STRING": "mongodb+srv://pedrolabrabo:3hoPljas_@pedro-dev.z8feu.mongodb.net/TestePratico?retryWrites=true&w=majority",
+        "DATABASE_NAME": "TestePratico"
+      },
       "publishAllPorts": true,
       "useSSL": true
     }
