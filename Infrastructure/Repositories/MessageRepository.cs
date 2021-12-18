@@ -23,9 +23,30 @@ namespace Infrastructure.Repositories
                 .ToList().Select(m => ToDomain(m)).AsQueryable();
         }
 
-        public Task<IQueryable<Message>> GetAllMessagesBy(int clientId, TypeEnum type)
+        public async Task<IQueryable<Message>> GetAllMessagesBy(TypeEnum type)
         {
-            throw new System.NotImplementedException();
+            var pipeline = PipelineDefinition<MessageDto, MessageDto>.Create(
+                new BsonDocument[] { 
+                    new BsonDocument("$lookup", 
+                        new BsonDocument()
+                        {
+                            ["from"] = "Client",
+                            ["localField"] = "ReceiverId",
+                            ["foreignField"] = "Id",
+                            ["as"] = "Client",
+                        }
+                    ),
+                    new BsonDocument("$match",
+                        new BsonDocument("Client", 
+                            new BsonDocument("$elemMatch",
+                                new BsonDocument("TypeId", (int)type)
+                            )
+                        )
+                    )
+                }
+            );
+
+            return (await _collection.AggregateAsync(pipeline)).ToList().Select(m => ToDomain(m)).AsQueryable();
         }
 
         public async Task<IQueryable<Message>> GetAllMessagesBy(string title)
@@ -37,8 +58,10 @@ namespace Infrastructure.Repositories
         public async Task<IQueryable<Message>> GetAllMessagesWithSubString(string titleSubString)
         {
             var pipeline = PipelineDefinition<MessageDto, MessageDto>.Create(
-                new BsonDocument[] { new BsonDocument("Title", new BsonDocument("$regex", titleSubString)) 
-            });
+                new BsonDocument[] { 
+                    new BsonDocument("Title", new BsonDocument("$regex", titleSubString))
+                }
+            );
 
             return (await _collection.AggregateAsync(pipeline)).ToList().Select(m => ToDomain(m)).AsQueryable();
         }

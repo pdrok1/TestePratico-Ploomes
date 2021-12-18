@@ -4,6 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using BusinessLogic.Actions.CreateMessage;
 using MediatR;
+using BusinessLogic.Actions.GetAllMessagesByClientId;
+using System.Collections.Generic;
+using BusinessLogic.Actions.GetMessagesWithTitle;
+using BusinessLogic.Actions.GetMessagesContainingInTitle;
+using BusinessLogic.Actions.GetMessagesFromClientsWithContact;
 
 namespace API.Controllers
 {
@@ -15,9 +20,37 @@ namespace API.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(Message), StatusCodes.Status200OK)]
-        public async Task<IActionResult> CreateMessage([FromBody] CreateMessageRequest request)
+        public async Task<IActionResult> CreateMessage([FromBody] CreateMessageCommandRequest request)
         {
             return Ok(await _mediator.Send(request));
+        }
+
+        [HttpGet("GetAllMessagesByClientId/{id}")]
+        [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllMessagesByClientId([FromRoute] int id)
+        {
+            return Ok(await _mediator.Send(new GetAllMessagesByClientIdCommandRequest(id)));
+        }
+
+        [HttpGet("GetMessagesFromClientsWithContact")]
+        [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetMessagesFromClientsWithContact([FromRoute] BusinessLogic.Entities.Contacts.TypeEnum contactType)
+        {
+            return Ok(await _mediator.Send(new GetMessagesFromClientsWithContactCommandRequest(contactType)));
+        }
+
+        [HttpGet("GetMessagesWithTitle")]
+        [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetMessagesWithTitle([FromQuery] string title)
+        {
+            return Ok(await _mediator.Send(new GetMessagesWithTitleCommandRequest(title)));
+        }
+
+        [HttpGet("GetMessagesContainingTitle")]
+        [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetMessagesContainingTitle([FromQuery] string title)
+        {
+            return Ok(await _mediator.Send(new GetMessagesContainingTitleCommandRequest(title)));
         }
     }
 }
