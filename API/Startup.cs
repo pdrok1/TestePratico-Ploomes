@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
+using System.Threading;
 
 namespace API
 {
@@ -33,6 +34,13 @@ namespace API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Scheme = "bearer"
+                });
                 c.OperationFilter<RequireAuthorizationHeaderFilter>();
             });
 
@@ -54,7 +62,6 @@ namespace API
                 app.UseDeveloperExceptionPage();
             }
 
-
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"); } );
 
@@ -63,7 +70,10 @@ namespace API
                 if (context.Request.Headers.TryGetValue("Authorization", out var bearer) && bearer.ToString() == "Bearer 908123u9132r187js1a289a8")
                     await next();
                 else
+                {
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
                     throw new ApplicationException("You are not allowed to see this.");
+                }
             });
 
 
