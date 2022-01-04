@@ -1,11 +1,6 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BusinessLogic.Actions.GetMessagesContainingInTitle
+namespace BusinessLogic.Actions.GetMessagesContainingTitle
 {
     public class GetMessagesContainingTitleCommandRequest : IRequest<GetMessagesContainingTitleCommandResponse>
     {

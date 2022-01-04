@@ -7,7 +7,7 @@ using MediatR;
 using BusinessLogic.Actions.GetAllMessagesByClientId;
 using System.Collections.Generic;
 using BusinessLogic.Actions.GetMessagesWithTitle;
-using BusinessLogic.Actions.GetMessagesContainingInTitle;
+using BusinessLogic.Actions.GetMessagesContainingTitle;
 using BusinessLogic.Actions.GetMessagesFromClientsWithContact;
 
 namespace API.Controllers
@@ -50,7 +50,7 @@ namespace API.Controllers
         [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMessagesContainingTitle([FromQuery] string title)
         {
-            return Ok((await _mediator.Send(new GetMessagesContainingTitleCommandRequest(title))));
+            return Ok((await _mediator.Send(new GetMessagesContainingTitleCommandRequest(title))).result);
         }
     }
 }

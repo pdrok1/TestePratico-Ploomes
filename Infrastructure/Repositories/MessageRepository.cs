@@ -58,8 +58,8 @@ namespace Infrastructure.Repositories
         public async Task<IQueryable<Message>> GetAllMessagesWithSubString(string titleSubString)
         {
             var pipeline = PipelineDefinition<MessageDto, MessageDto>.Create(
-                new BsonDocument[] { 
-                    new BsonDocument("Title", new BsonDocument("$regex", titleSubString))
+                new BsonDocument[] {
+                    new BsonDocument("$match", new BsonDocument("Title", new BsonDocument("$regex", titleSubString)))
                 }
             );
 

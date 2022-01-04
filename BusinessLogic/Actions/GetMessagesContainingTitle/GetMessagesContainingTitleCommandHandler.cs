@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BusinessLogic.Repositories;
+using MediatR;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Actions.GetMessagesContainingInTitle
+namespace BusinessLogic.Actions.GetMessagesContainingTitle
 {
     public class GetMessagesContainingTitleCommandHandler : IRequestHandler<GetMessagesContainingTitleCommandRequest, GetMessagesContainingTitleCommandResponse>
     {
         private readonly IMessageRepository _messageRepository;
 
-        public GetMessagesFromClientsWithContactCommandHandler(
+        public GetMessagesContainingTitleCommandHandler(
             IMessageRepository messageRepository
         )
         {
