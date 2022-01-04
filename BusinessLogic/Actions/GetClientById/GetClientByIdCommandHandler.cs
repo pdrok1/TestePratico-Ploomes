@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Repositories;
+﻿using BusinessLogic.Entities;
+using BusinessLogic.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Actions.GetClientById
 {
-    public class GetClientByIdCommandHandler : IRequestHandler<GetClientByIdCommandRequest, GetClientByIdCommandResponse>
+    public class GetClientByIdCommandHandler : IRequestHandler<GetClientByIdCommandRequest, Client>
     {
         private readonly IClientRepository _clientRepository;
 
@@ -20,9 +21,9 @@ namespace BusinessLogic.Actions.GetClientById
             _clientRepository = clientRepository;
         }
 
-        public async Task<GetClientByIdCommandResponse> Handle(GetClientByIdCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Client> Handle(GetClientByIdCommandRequest request, CancellationToken cancellationToken)
         {
-            return (GetClientByIdCommandResponse)await _clientRepository.GetBy(request.Id);
+            return await _clientRepository.GetBy(request.Id);
         }
     }
 }

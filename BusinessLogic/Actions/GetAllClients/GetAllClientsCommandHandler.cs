@@ -22,9 +22,9 @@ namespace BusinessLogic.Actions.GetAllClients
             var response = new GetAllClientsCommandResponse();
 
             if (request.ShowOnlyDisabled)
-                response.list = (await _clientRepository.GetAllDisabled()).ToList();
+                response.result = (await _clientRepository.GetAllDisabled()).ToList();
             else
-                response.list = (await _clientRepository.GetAll(request.ShowDisabled)).ToList();
+                response.result = (await _clientRepository.GetAll(request.ShowDisabled)).ToList();
 
             return response;
         }

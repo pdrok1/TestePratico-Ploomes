@@ -29,28 +29,28 @@ namespace API.Controllers
         [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllMessagesByClientId([FromRoute] int id)
         {
-            return Ok(await _mediator.Send(new GetAllMessagesByClientIdCommandRequest(id)));
+            return Ok((await _mediator.Send(new GetAllMessagesByClientIdCommandRequest(id))).result);
         }
 
         [HttpGet("GetMessagesFromClientsWithContact")]
         [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMessagesFromClientsWithContact([FromRoute] BusinessLogic.Entities.Contacts.TypeEnum contactType)
         {
-            return Ok(await _mediator.Send(new GetMessagesFromClientsWithContactCommandRequest(contactType)));
+            return Ok((await _mediator.Send(new GetMessagesFromClientsWithContactCommandRequest(contactType))).result);
         }
 
         [HttpGet("GetMessagesWithTitle")]
         [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMessagesWithTitle([FromQuery] string title)
         {
-            return Ok(await _mediator.Send(new GetMessagesWithTitleCommandRequest(title)));
+            return Ok((await _mediator.Send(new GetMessagesWithTitleCommandRequest(title))).result);
         }
 
         [HttpGet("GetMessagesContainingTitle")]
         [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMessagesContainingTitle([FromQuery] string title)
         {
-            return Ok(await _mediator.Send(new GetMessagesContainingTitleCommandRequest(title)));
+            return Ok((await _mediator.Send(new GetMessagesContainingTitleCommandRequest(title))));
         }
     }
 }

@@ -4,8 +4,6 @@ namespace BusinessLogic.Actions.CreateMessage
 {
     public class CreateMessageCommandRequest : IRequest<CreateMessageCommandResponse>
     {
-        public int Id { get; set; }
-
         public int ReceiverId { get; set; }
 
         public string Type { get; set; }

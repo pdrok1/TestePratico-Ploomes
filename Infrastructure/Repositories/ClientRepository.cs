@@ -44,7 +44,7 @@ namespace Infrastructure.Repositories
             return Task.Run(() => 
                 !includeDisabled
                 ? _collection.Find(Builders<ClientDto>.Filter.Eq(doc => doc.Enabled, true)).ToEnumerable().AsQueryable().Select(doc => ToDomain(doc))
-                : _collection.AsQueryable().Select(doc => ToDomain(doc))
+                : _collection.AsQueryable().ToList().AsQueryable().Select(doc => ToDomain(doc))
             );
         }
 

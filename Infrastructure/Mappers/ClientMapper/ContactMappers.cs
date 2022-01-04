@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Entities;
+using BusinessLogic.Entities.Contacts;
 using Infrastructure.Dtos;
 
 namespace Infrastructure.Mappers.ClientMapper
@@ -9,7 +10,7 @@ namespace Infrastructure.Mappers.ClientMapper
             => new Contact()
             {
                 Id = dto.Id,
-                TypeId = dto.TypeId,
+                TypeId = (TypeEnum)dto.TypeId,
                 Value = dto.Value
             };
 
@@ -17,7 +18,7 @@ namespace Infrastructure.Mappers.ClientMapper
             => new ContactDto()
             {
                 Id = domain.Id,
-                TypeId = domain.TypeId,
+                TypeId = (int)domain.TypeId,
                 Value = domain.Value
             };
 

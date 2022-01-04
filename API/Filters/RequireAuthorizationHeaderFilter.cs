@@ -27,22 +27,6 @@ namespace API.Filters
             {
                 [scheme] = new List<string>()
             });
-
-            /*
-            operation.Parameters.Add(new OpenApiParameter
-            {
-                UnresolvedReference = false,
-                Name = "Authorization",
-                In = ParameterLocation.Header,
-                Description = "access token",
-                Required = true,
-                Schema = new OpenApiSchema
-                {
-                    Type = "string",
-                    Default = new OpenApiString("Bearer ")
-                }
-            });
-            */
         }
     }
 }

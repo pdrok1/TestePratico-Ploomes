@@ -1,6 +1,8 @@
 ﻿using BusinessLogic.Entities;
+using BusinessLogic.Entities.Contacts;
 using BusinessLogic.Repositories;
 using MediatR;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,6 +26,17 @@ namespace BusinessLogic.Actions.UpsertClient
                 Nickname = request.Nickname,
                 Contacts = request.Contacts
             };
+
+            if (request.Contacts != null)
+            {
+                newClientData.Contacts = new List<Contact>();
+                int index = 0;
+                foreach (var contact in request.Contacts)
+                {
+                    if(!string.IsNullOrEmpty(contact.Value))
+                        newClientData.Contacts.Add(new Contact() { Id = ++index, TypeId = contact.TypeId, Value = contact.Value });
+                }
+            }
 
             var currentClient = await _clientRepository.GetBy(request.Id);
             if (currentClient is null)

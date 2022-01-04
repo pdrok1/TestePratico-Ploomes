@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Abstract;
+using BusinessLogic.Entities.Contacts;
 
 namespace BusinessLogic.Entities
 {
@@ -6,7 +7,7 @@ namespace BusinessLogic.Entities
     {
         public int Id { get; set; }
 
-        public int TypeId { get; set; }
+        public TypeEnum TypeId { get; set; }
 
         public string Value { get; set; }
 

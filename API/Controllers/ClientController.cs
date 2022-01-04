@@ -51,21 +51,21 @@ namespace API.Controllers
         }
 
         [HttpGet("GetAllClients")]
-        [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllClients([FromRoute] bool showDisabled, [FromRoute] bool showOnlyDisabled)
+        [ProducesResponseType(typeof(IEnumerable<Client>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllClients([FromQuery] bool showDisabled, [FromQuery] bool showOnlyDisabled)
         {
-            return Ok(await _mediator.Send(new GetAllClientsCommandRequest(showDisabled, showOnlyDisabled)));
+            return Ok((await _mediator.Send(new GetAllClientsCommandRequest(showDisabled, showOnlyDisabled))).result);
         }
 
         [HttpGet("GetAllClientsWithContact")]
-        [ProducesResponseType(typeof(IEnumerable<Message>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllClientsWithContact([FromRoute] BusinessLogic.Entities.Contacts.TypeEnum contactType)
+        [ProducesResponseType(typeof(IEnumerable<Client>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllClientsWithContact([FromQuery] BusinessLogic.Entities.Contacts.TypeEnum contactType)
         {
-            return Ok(await _mediator.Send(new GetAllClientsWithContactCommandRequest(contactType)));
+            return Ok((await _mediator.Send(new GetAllClientsWithContactCommandRequest(contactType))).result);
         }
 
         [HttpGet("GetClientById/{id}")]
-        [ProducesResponseType(typeof(Message), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Client), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetClientById([FromRoute] int id)
         {
             return Ok(await _mediator.Send(new GetClientByIdCommandRequest(id)));

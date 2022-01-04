@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class ControllerDefault : ControllerBase
     {
         protected readonly IMediator _mediator;

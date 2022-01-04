@@ -14,6 +14,10 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
 using System.Threading;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using API.Middlewares;
+using System.Threading.Tasks;
 
 namespace API
 {
@@ -23,6 +27,8 @@ namespace API
         {
             Configuration = configuration;
         }
+
+        public readonly string SWAGGER_ENDPOINT_PATH = "/swagger/v1/swagger.json";
 
         public IConfiguration Configuration { get; }
 
@@ -34,7 +40,7 @@ namespace API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,
                     BearerFormat = "JWT",
@@ -52,6 +58,10 @@ namespace API
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<CounterRepository>();
+
+            services
+                .AddAuthentication(options => options.DefaultAuthenticateScheme = "DefaultAuthenticationScheme")
+                .AddScheme<BasicAuthenticationOptions, BasicAuthenticationHandler>("DefaultAuthenticationScheme", options => { });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,26 +73,22 @@ namespace API
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"); } );
-
-            app.Use(async (context, next) =>
-            {
-                if (context.Request.Headers.TryGetValue("Authorization", out var bearer) && bearer.ToString() == "Bearer 908123u9132r187js1a289a8")
-                    await next();
-                else
-                {
-                    Thread.Sleep(TimeSpan.FromSeconds(1));
-                    throw new ApplicationException("You are not allowed to see this.");
-                }
-            });
-
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint(SWAGGER_ENDPOINT_PATH, "API v1"); } );
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
+
             app.UseRouting();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/", (context) => {
+                    context.Response.Redirect("/swagger");
+                    return Task.FromResult(0);
+                });
                 endpoints.MapControllers();
             });
         }

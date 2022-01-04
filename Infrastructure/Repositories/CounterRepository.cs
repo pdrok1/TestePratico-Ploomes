@@ -15,10 +15,10 @@ namespace Infrastructure.Repositories
 
         public async Task<int> GetNextId()
         {
-            var counter = (await _collection.FindAsync(Builders<CounterDto>.Filter.Eq(doc => doc.Id, 1))).FirstOrDefault();
+            var counter = _collection.AsQueryable().FirstOrDefault();
             counter.Value += 1;
             await _collection.FindOneAndReplaceAsync<BsonDocument>(Builders<CounterDto>.Filter.Eq(doc => doc.Id, 1), counter);
-            return counter.Value - 1;
+            return counter.Value;
         }
     }
 }
